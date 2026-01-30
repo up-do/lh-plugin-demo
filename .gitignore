@@ -37,6 +37,8 @@ cabal.sandbox.config
 cabal.project.local
 .updo
 updo
+project-nix
+project-versions.nix
 
 tests/synthesis/logs/*
 !tests/synthesis/logs/.gitkeep
