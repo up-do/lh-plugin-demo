@@ -28,9 +28,10 @@ all: \
 # as intermediate. This is all we want when not doing a GHC upgrade.
 #
 # Comment out these .INTERMEDIATE targets to allow these files to be kept.
-#.INTERMEDIATE: ghc-$(GHC_VERSION).$(CABAL_VIA).project
-.INTERMEDIATE: ghc-$(GHC_UPGRADE).$(CABAL_VIA).project
-#.INTERMEDIATE: ghc-$(GHC_VERSION).$(STACK_VIA).yaml
+.INTERMEDIATE: cabal.project
+# .INTERMEDIATE: ghc-$(GHC_VERSION).$(CABAL_VIA).project
+# .INTERMEDIATE: ghc-$(GHC_UPGRADE).$(CABAL_VIA).project
+# .INTERMEDIATE: ghc-$(GHC_VERSION).$(STACK_VIA).yaml
 .INTERMEDIATE: ghc-$(GHC_UPGRADE).$(STACK_VIA).yaml
 .INTERMEDIATE: ghc-$(GHC_VERSION).sha256map.nix
 .INTERMEDIATE: ghc-$(GHC_UPGRADE).sha256map.nix
