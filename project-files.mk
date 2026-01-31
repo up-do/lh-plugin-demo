@@ -20,24 +20,15 @@ project-nix/ghc-%/sha256map.nix: ghc-%.sha256map.nix
 
 # We don't want to have files named *.dhall2stack.yaml and *.dhall2cabal.project
 # so we rename them.
-ghc-$(GHC_VERSION).stack.yaml: ghc-$(GHC_VERSION).dhall2stack.yaml
+ghc-%.stack.yaml: ghc-%.dhall2stack.yaml
 	cp $^ $@
 	
-ghc-$(GHC_VERSION).stack.yaml.lock: ghc-$(GHC_VERSION).dhall2stack.yaml.lock
+ghc-%.stack.yaml.lock: ghc-%.dhall2stack.yaml.lock
 	cp $^ $@
 	
-ghc-$(GHC_UPGRADE).stack.yaml: ghc-$(GHC_UPGRADE).dhall2stack.yaml
+ghc-%.cabal.project: ghc-%.dhall2cabal.project
 	cp $^ $@
 	
-ghc-$(GHC_UPGRADE).stack.yaml.lock: ghc-$(GHC_UPGRADE).dhall2stack.yaml.lock
-	cp $^ $@
-	
-ghc-$(GHC_VERSION).cabal.project: ghc-$(GHC_VERSION).dhall2cabal.project
-	cp $^ $@
-	
-ghc-$(GHC_UPGRADE).cabal.project: ghc-$(GHC_UPGRADE).dhall2cabal.project
-	cp $^ $@
-
 .PHONY: ghc-projects
 ghc-projects: \
 	ghc-$(GHC_VERSION).stack.yaml \
