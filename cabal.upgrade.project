@@ -141,7 +141,7 @@ constraints:
   , witherable ==0.5
 program-options
   ghc-options: -fhide-source-paths
-  
+
 allow-newer:
     indexed-traversable:base
   , smtlib-backends-process:base

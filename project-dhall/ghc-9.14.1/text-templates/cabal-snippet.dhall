@@ -1,7 +1,7 @@
 ''
 program-options
   ghc-options: -fhide-source-paths
-  
+
 allow-newer:
     indexed-traversable:base
   , smtlib-backends-process:base
