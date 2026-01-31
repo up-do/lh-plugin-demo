@@ -1,0 +1,13 @@
+import: https://stackage.org/lts-24.28/cabal.config
+
+-- We have 1 package.
+packages:
+    .
+
+-- Version equality constraints.
+constraints:
+    liquid-prelude ==0.9.10.1.2
+  , liquid-vector ==0.13.1.0.1
+program-options
+  ghc-options: -fhide-source-paths
+

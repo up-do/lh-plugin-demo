@@ -1,7 +1,18 @@
+user-message: "This stack project is generated."
+
+nix:
+  packages: [cacert, git, hostname, z3]
+
 resolver: lts-20.26
+
+# We have 1 package.
 packages:
-  - ..
+  - ./.
+
 extra-deps:
+  # Package versions for published packages either not on Stackage or
+  # not matching the version on Stackage for the resolver we use.
+  # These package-version extra dependencies are equivalent to cabal constraints.
   - rest-rewrite-0.4.3
   - smtlib-backends-0.3
   - smtlib-backends-process-0.3
@@ -10,6 +21,3 @@ extra-deps:
   - liquid-fixpoint-0.9.2.5
   - liquid-prelude-0.9.2.8.1
   - liquid-vector-0.12.3.1.2
-
-nix:
-  packages: [cacert, git, hostname, z3]
