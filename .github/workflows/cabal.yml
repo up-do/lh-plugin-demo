@@ -55,4 +55,4 @@ jobs:
         run: cabal update
 
       - name: Build
-        run: cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project
+        run: cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project -j --semaphore
