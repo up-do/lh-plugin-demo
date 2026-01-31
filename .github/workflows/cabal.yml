@@ -18,12 +18,7 @@ jobs:
           - "9.8.1"
           - "9.10.3"
           - "9.12.2"
-        include:
-          - repo: "hackage"
-          - ghc: "9.14.1"
-            repo: "github"
-#          - ghc: "9.14.1"
-#            repo: "hackage"
+          - "9.14.1"
 
     steps:
       - uses: actions/checkout@v3
@@ -43,13 +38,9 @@ jobs:
 
       - name: Configure the build
         run: |
-          if [ ${{ matrix.repo }} == "github" ]
-          then
-            cp cabal.project.github cabal.project
-          fi
-          cabal configure --enable-tests --enable-benchmarks --disable-documentation
+          cabal configure --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project --enable-tests --enable-benchmarks --disable-documentation
           # generate dist-newstyle/cache/plan.json
-          cabal build all --dry-run
+          cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project --dry-run
 
       - name: Cache ~/.cabal/packages, ~/.cabal/store and dist-newstyle
         uses: actions/cache@v3
@@ -64,4 +55,4 @@ jobs:
         run: cabal update
 
       - name: Build
-        run: cabal build all
+        run: cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project

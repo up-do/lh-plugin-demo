@@ -17,12 +17,7 @@ jobs:
           - "9.8.1"
           - "9.10.3"
           - "9.12.2"
-        include:
-          - repo: "hackage"
-#          - ghc: "9.14.1"
-#            repo: "github"
-#          - ghc: "9.14.1"
-#            repo: "hackage"
+          - "9.14.1"
 
     steps:
       - uses: actions/checkout@v3
@@ -42,12 +37,8 @@ jobs:
 
       - name: Configure the build
         run: |
-          if [ ${{ matrix.repo }} == "hackage" ]
-          then
-            sed "s/\.\././g" ./stack/stack-${{ matrix.ghc }}.yaml > stack.yaml
-          fi
           # generate stack.yaml.lock
-          stack build --no-terminal --dry-run
+          stack build --stack-yaml=ghc-${{ matrix.ghc }}.dhall2stack.yaml --no-terminal --dry-run
 
       - name: Cache ~/.stack and .stack-work
         uses: actions/cache@v3
