@@ -7,20 +7,38 @@ This repo demonstrates how to use [LiquidHaskell](https://github.com/ucsd-progsy
 - how to tell GHC to invoke the plugin
 - how to specify the relevant LH wrapper packages as dependencies
 
-[stack/stack-*.yaml](stack/) shows
+## Building with Projects
 
-- how to point `stack` at the relevant LH packages on **hackage**
-- building with `stack --stack-yaml=stack/stack-<ghc version>.yaml build`
+You will need to have a supported GHC in your PATH when building with Cabal.
+Stack will install the appropriate GHC version for you by default unless you
+have it configured not to do that and pick up system GHC versions.
 
-[cabal.project.github](cabal.project.github) shows
+```
+$ stack config set system-ghc true --global
+$ stack config set install-ghc false --global
+```
 
-- how to point `cabal` to the relevant LH repositories on **github** (only works with ghc-9.14.1)
-- building with `cabal build --project-file=cabal.project.github`
+This is recommended if you use [GHCup](https://www.haskell.org/ghcup/) to manage
+your GHC versions.
 
-No `cabal.project` file is needed for the releases of `liquidhaskell` in hackage.
-`cabal-install` should pick the appropriate version for each compiler (supported GHCs:
-9.2.8, 9.4.7, 9.6.3, 9.8.1, 9.10.1, 9.12.2). Build with `cabal build` if you have
-a supported GHC in your PATH.
+We supply `ghc-x.y.z.stack.yaml` Stack projects and `ghc-x.y.z.cabal.project`
+Cabal projects for each supported GHC version; `9.2.8`, `9.4.7`, `9.6.3`,
+`9.8.1`, `9.10.1`, `9.12.2`, `9.14.1`.
+
+All but `ghc-9.14.1.*` projects depend on relevant LH packages from **hackage**.
+
+- build using Stack with `stack build --stack.yaml=ghc-x.y.z.stack-yaml`
+- build using Cabal with `cabal build all --project-file=ghc-x.y.z.cabal.project`
+
+The `ghc-9.14.1.*` projects depend on relevant LH packages from **github**.
+
+## Building using Cabal without a Project
+
+We supply no `cabal.project` and no such project is needed for the releases of
+`liquidhaskell` in hackage. The dependency solver `cabal-install:exe:cabal` uses
+should pick the appropriate LH dependency versions for each compiler.
+
+- build with `cabal build all`
 
 ## GHCi Integration
 
