@@ -18,6 +18,38 @@ include updo/Makefile
 project-nix/ghc-%/sha256map.nix: ghc-%.sha256map.nix
 	mkdir -p $(@D) && cp $^ $@
 
+# We don't want to have files named *.dhall2stack.yaml and *.dhall2cabal.project
+# so we rename them.
+ghc-$(GHC_VERSION).stack.yaml: ghc-$(GHC_VERSION).dhall2stack.yaml
+	cp $^ $@
+	
+ghc-$(GHC_VERSION).stack.yaml.lock: ghc-$(GHC_VERSION).dhall2stack.yaml.lock
+	cp $^ $@
+	
+ghc-$(GHC_UPGRADE).stack.yaml: ghc-$(GHC_UPGRADE).dhall2stack.yaml
+	cp $^ $@
+	
+ghc-$(GHC_UPGRADE).stack.yaml.lock: ghc-$(GHC_UPGRADE).dhall2stack.yaml.lock
+	cp $^ $@
+	
+ghc-$(GHC_VERSION).cabal.project: ghc-$(GHC_VERSION).dhall2cabal.project
+	cp $^ $@
+	
+ghc-$(GHC_UPGRADE).cabal.project: ghc-$(GHC_UPGRADE).dhall2cabal.project
+	cp $^ $@
+
+.PHONY: ghc-projects
+ghc-projects: \
+	ghc-$(GHC_VERSION).stack.yaml \
+	ghc-$(GHC_VERSION).stack.yaml.lock \
+	ghc-$(GHC_VERSION).cabal.project \
+
+.PHONY: ghc-upgrade-projects
+ghc-upgrade-projects: \
+	ghc-$(GHC_UPGRADE).stack.yaml \
+	ghc-$(GHC_UPGRADE).stack.yaml.lock \
+	ghc-$(GHC_UPGRADE).cabal.project
+	
 .PHONY: all
 all: \
   projects \
@@ -29,13 +61,20 @@ all: \
 #
 # Comment out these .INTERMEDIATE targets to allow these files to be kept.
 .INTERMEDIATE: cabal.project
-# .INTERMEDIATE: ghc-$(GHC_VERSION).$(CABAL_VIA).project
-# .INTERMEDIATE: ghc-$(GHC_UPGRADE).$(CABAL_VIA).project
-# .INTERMEDIATE: ghc-$(GHC_VERSION).$(STACK_VIA).yaml
-# .INTERMEDIATE: ghc-$(GHC_UPGRADE).$(STACK_VIA).yaml
+.INTERMEDIATE: cabal.upgrade.project
+.INTERMEDIATE: stack.yaml
+.INTERMEDIATE: stack.yaml.lock
+.INTERMEDIATE: stack.upgrade.yaml
+.INTERMEDIATE: stack.upgrade.yaml.lock
+.INTERMEDIATE: ghc-$(GHC_VERSION).$(CABAL_VIA).project
+.INTERMEDIATE: ghc-$(GHC_UPGRADE).$(CABAL_VIA).project
+.INTERMEDIATE: ghc-$(GHC_VERSION).$(STACK_VIA).yaml
+.INTERMEDIATE: ghc-$(GHC_UPGRADE).$(STACK_VIA).yaml
+.INTERMEDIATE: ghc-$(GHC_VERSION).$(STACK_VIA).yaml.lock
+.INTERMEDIATE: ghc-$(GHC_UPGRADE).$(STACK_VIA).yaml.lock
 .INTERMEDIATE: ghc-$(GHC_VERSION).sha256map.nix
 .INTERMEDIATE: ghc-$(GHC_UPGRADE).sha256map.nix
-
+	
 # If true, generate the sha256map from the stack.yaml with python,
 # overriding the recipe for this target.
 ifeq ($(SHA256MAP_VIA_PYTHON), true)
