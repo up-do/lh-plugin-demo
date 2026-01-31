@@ -4,4 +4,6 @@
 
   nix:
     packages: [cacert, git, hostname, z3]
+
+  allow-newer: true
   ''
