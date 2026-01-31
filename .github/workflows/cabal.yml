@@ -38,9 +38,9 @@ jobs:
 
       - name: Configure the build
         run: |
-          cabal configure --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project --enable-tests --enable-benchmarks --disable-documentation
+          cabal configure --project-file=ghc-${{ matrix.ghc }}.cabal.project --enable-tests --enable-benchmarks --disable-documentation
           # generate dist-newstyle/cache/plan.json
-          cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project --dry-run
+          cabal build all --project-file=ghc-${{ matrix.ghc }}.cabal.project --dry-run
 
       - name: Cache ~/.cabal/packages, ~/.cabal/store and dist-newstyle
         uses: actions/cache@v3
@@ -55,4 +55,4 @@ jobs:
         run: cabal update
 
       - name: Build
-        run: cabal build all --project-file=ghc-${{ matrix.ghc }}.dhall2cabal.project -j --semaphore
+        run: cabal build all --project-file=ghc-${{ matrix.ghc }}.cabal.project -j --semaphore
